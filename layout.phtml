@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- name on the web browser tab -->
+  <title>StreetArtMap™</title>
+  <!-- contains the informations to style and format the html document-->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- web browser tab icone -->
+  <link rel='icon' href='favicon.ico' type='image/x-icon'/ >
+  <!-- CDN allows external use of icons  -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <!-- content delivery network allows external use of fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Carter+One|East+Sea+Dokdo&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <a class="navbar-home" href="index.php">STREETARTMAP</a>
+      </div>
+      <span class="navbar-toggle" id="navbar-toggle"><i class="fas fa-bars"></i></span>  
+      <div class="navbar-conn" id="navbar-conn">
+        <ul>
+          <!-- checks if a session is open by checking the presence of 'role' key-->
+          <?php if ( array_key_exists ( 'role', $_SESSION ) == false ): ?>
+            <li>
+              <a href="login.php">LOGIN </a>
+            </li>
+            <li>
+              <a href="register.php">REGISTER </a>
+            </li>
+              <!-- if a session is running display: -->
+          <?php else :?>
+            <li>
+              <a href="logout.php">Logout</a>
+            </li>
+            <li>
+              <a href="upload.php">Upload</a>
+            </li>
+          <?php endif ?>
+          </ul>
+        </div>
+      </nav>
+    </header>
+        
+          
+  <main>
+    <!-- loading PHTML template specified by PHP-->
+    <?php include $template.'.phtml' ?>
+        
+        
+  
+    <!-- CDN JQuery script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>        
+  <!-- JS script -->
+  <script src="js/randomImage.js"></script>
+  <script src="js/addComment.js"></script>
+  <script src="js/navbarToggle.js"></script>
+  <!-- <script src="js/fetchComment.js"></script> -->
+
+  </main>
+  
+</body>
