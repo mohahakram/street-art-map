@@ -1,0 +1,76 @@
+
+<!-- shows clicked image from index -->
+<div class="bodyImgArtwork" id="bodyImgArtwork">
+  <img id="bodyImg" src="img/upload/<?=$file['0']['Path']?>" alt="">
+</div>
+
+<!-- display image -->
+<div class="container-artwork">
+    <div class="image">
+        <img class="img" src="img/upload/<?= $file['0']['Path'] ?>" alt="">
+        <!-- only admin can delete the picture -->
+        <?php if ( array_key_exists ( 'role', $_SESSION ) && $_SESSION['role'] === 'admin'): ?>
+            <a class="deletePicture" title="delete picture" href="deletePicture.php?id=<?= intval($file['0']['imageId']) ?>&path=<?= $file['0']['Path'] ?>"><i class="fas fa-times"></i></a>
+        <?php endif ?>
+    </div>
+
+    <!-- displays uploader pseudo -->
+    <div class="uploader">
+        <p><?=$file['0']['Pseudo']?></p>
+    </div>
+    <!-- displays localisation -->
+    <div class="geoloc">
+        <p>Longitude: <?= $file['0']['Lon'] ?> <span class="lon-span"> | </span> Latitude: <?= $file['0']['Lat'] ?></p>
+    </div>
+
+    <!-- add comment -->
+    <div class="container-comment">
+        <?php if ( array_key_exists ( 'role', $_SESSION )) : ?>
+            <form method="POST" id="commentForm">
+                <div class="form-group">
+                    <textarea name="commentContent" id="commentContent" class="form-control" placeholder="Enter Comment" rows="5"></textarea>
+                    <input type="hidden" id="imageId" name="imageId" value=<?= $file['0']['imageId'] ?> >
+                    <input type="hidden" id="pseudo" name="pseudo" value=<?= $file['0']['Pseudo'] ?> >
+                    <input type="submit" name="submit" id="submit" class="submitComment" value="submit" />
+                </div>
+                <!-- <div class="form-group"> -->
+                    <!-- <input type="hidden" name="comment_id" id="comment_id" value="0" /> -->
+                <!-- </div> -->
+            </form>
+            <span id="commentMessage"></span>
+        <?php else : ?>
+            <a href="login.php">Log in to post comment </a>
+        <?php endif ?>
+        <span id="errorMessage"></span>
+    </div>
+    
+    <!-- displays comments -->
+    <table class="comments">
+        <caption>Comments</caption>
+        <!-- iterates through every comment and displays pseudo and comment -->
+        <p class="lastComment"></p>
+        <?php foreach ( $comm as $comment ) : ?>
+            <tr>
+                <!-- converts special characters to html entities -->
+                <th class="artPseudo"><?= htmlspecialchars ( $comment['Pseudo']) ?></th>
+                <!-- only admin can delete comment -->
+                <?php if ( array_key_exists ( 'role', $_SESSION ) && $_SESSION['role'] === 'admin' ) : ?>
+                <th class="">
+                    <!-- deletes comment with the right  comment id  -->
+                    <a class="deleteComment" href="deleteComment.php?id=<?= intval ( $comment['commentId'] )?>&imageId=<?= $_GET['id']?> "><i class="fas fa-times"></i></a>
+                </th>
+            <?php endif ?>
+            </tr>
+        
+        
+        <tr> 
+            <td class="artComment"colspan="2"><?=htmlspecialchars($comment['Comment'])?></td>
+            <!-- only displays the chosen length of a comment -->
+             <!-- <td><?= substr ( htmlspecialchars ( $comment['Comment'] ), 0, 200) ?></td> -->
+        </tr>
+        <?php endforeach ?>
+    </table>
+</div>
+
+
+                
